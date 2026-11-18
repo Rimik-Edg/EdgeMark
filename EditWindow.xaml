@@ -1,0 +1,109 @@
+<Window x:Class="EdgeMark.EditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="{DynamicResource L.EditTitle}" Icon="pack://application:,,,/Assets/app.ico"
+        Width="470" SizeToContent="Height" ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen" Topmost="True"
+        Background="{DynamicResource WindowBg}" Foreground="{DynamicResource Fg}"
+        FontFamily="{StaticResource UiFont}" FontSize="13" UseLayoutRounding="True">
+    <StackPanel Margin="22,18,22,20">
+
+        <!-- Как будет выглядеть в закладке -->
+        <Grid Margin="2,0,0,16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border Width="52" Height="52" CornerRadius="10" Background="{DynamicResource CardBg}"
+                    BorderBrush="{DynamicResource MenuBorder}" BorderThickness="1">
+                <Image x:Name="PreviewIcon" Width="32" Height="32" RenderOptions.BitmapScalingMode="HighQuality"/>
+            </Border>
+            <StackPanel Grid.Column="1" Margin="14,0,0,0" VerticalAlignment="Center">
+                <TextBlock x:Name="PreviewName" FontSize="19" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+                <TextBlock x:Name="PreviewPath" FontSize="12" Foreground="{DynamicResource SubFg}"
+                           TextTrimming="CharacterEllipsis" Margin="0,2,0,0"/>
+            </StackPanel>
+        </Grid>
+
+        <Border Background="{DynamicResource CardBg}" BorderBrush="{DynamicResource MenuBorder}"
+                BorderThickness="1" CornerRadius="8" Padding="16,14,16,16">
+            <StackPanel>
+                <!-- Название -->
+                <TextBlock Text="{DynamicResource L.DisplayName}" Foreground="{DynamicResource SubFg}" Margin="0,0,0,5"/>
+                <Grid>
+                    <TextBox x:Name="NameBox" Style="{StaticResource Input}" TextChanged="Any_Changed"/>
+                    <TextBlock x:Name="NamePlaceholder" IsHitTestVisible="False" Foreground="{DynamicResource SubFg}"
+                               Margin="9,0,0,0" VerticalAlignment="Center" Opacity="0.8"/>
+                </Grid>
+                <TextBlock Foreground="{DynamicResource SubFg}" FontSize="11.5" TextWrapping="Wrap" Margin="0,5,0,0"
+                           Text="{DynamicResource L.DisplayNameHint}"/>
+
+                <!-- Путь -->
+                <TextBlock Text="{DynamicResource L.Path}" Foreground="{DynamicResource SubFg}" Margin="0,16,0,5"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="PathBox" Style="{StaticResource Input}" TextChanged="Any_Changed"/>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                        <Button Style="{StaticResource PlainIconButton}" Content="&#xE8B7;" ToolTip="{DynamicResource L.PickFolder}"
+                                Margin="6,0,0,0" Click="BrowseFolder_Click"/>
+                        <Button Style="{StaticResource PlainIconButton}" Content="&#xE8E5;" ToolTip="{DynamicResource L.PickFile}"
+                                Margin="6,0,0,0" Click="BrowseFile_Click"/>
+                    </StackPanel>
+                </Grid>
+                <TextBlock x:Name="PathStatus" FontSize="12" Margin="0,6,0,0" TextWrapping="Wrap"/>
+
+                <!-- Значок -->
+                <TextBlock Text="{DynamicResource L.Icon}" Foreground="{DynamicResource SubFg}" Margin="0,16,0,7"/>
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton x:Name="IconSystem" Style="{StaticResource Segment}" GroupName="IconKind"
+                                 Content="{DynamicResource L.IconSystem}" Checked="IconKind_Checked"/>
+                    <RadioButton x:Name="IconGlyph" Style="{StaticResource Segment}" GroupName="IconKind"
+                                 Content="{DynamicResource L.IconSet}" Checked="IconKind_Checked"/>
+                    <RadioButton x:Name="IconFile" Style="{StaticResource Segment}" GroupName="IconKind"
+                                 Content="{DynamicResource L.IconFile}" Checked="IconKind_Checked"/>
+                </StackPanel>
+
+                <StackPanel x:Name="GlyphPanel" Margin="0,12,0,0" Visibility="Collapsed">
+                    <WrapPanel x:Name="Glyphs"/>
+                    <WrapPanel x:Name="ColorsPanel" Margin="0,4,0,0"/>
+                </StackPanel>
+
+                <Grid x:Name="FilePanel" Margin="0,12,0,0" Visibility="Collapsed">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Style="{StaticResource PlainButton}" Content="{DynamicResource L.PickIconFile}" Click="PickFile_Click"/>
+                    <TextBlock x:Name="FileLabel" Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center"
+                               Foreground="{DynamicResource SubFg}" FontSize="12" TextTrimming="CharacterEllipsis"/>
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <!-- Низ -->
+        <Grid Margin="0,16,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*" MinWidth="12"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="RemoveBtn" Style="{StaticResource PlainButton}" HorizontalAlignment="Left"
+                    Foreground="{DynamicResource Danger}" Click="Remove_Click">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="&#xE74D;" FontFamily="{StaticResource IconFont}" FontSize="12"
+                               VerticalAlignment="Center" Margin="0,0,7,0"/>
+                    <TextBlock x:Name="RemoveText" Text="{DynamicResource L.RemoveFromList}"/>
+                </StackPanel>
+            </Button>
+            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Style="{StaticResource PlainButton}" Content="{DynamicResource L.Cancel}" MinWidth="90" Margin="0,0,8,0"
+                        IsCancel="True" Click="Cancel_Click"/>
+                <Button Style="{StaticResource AccentButton}" Content="{DynamicResource L.Save}" MinWidth="104"
+                        IsDefault="True" Click="Save_Click"/>
+            </StackPanel>
+        </Grid>
+    </StackPanel>
+</Window>

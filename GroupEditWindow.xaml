@@ -1,0 +1,89 @@
+<Window x:Class="EdgeMark.GroupEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:EdgeMark"
+        Title="{DynamicResource L.GroupTitle}" Icon="pack://application:,,,/Assets/app.ico"
+        Width="440" SizeToContent="Height" ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen" Topmost="True"
+        Background="{DynamicResource WindowBg}" Foreground="{DynamicResource Fg}"
+        FontFamily="{StaticResource UiFont}" FontSize="13" UseLayoutRounding="True">
+    <StackPanel Margin="22,18,22,20">
+
+        <!-- Как будет выглядеть заголовок группы -->
+        <Border Background="{DynamicResource MenuBg}" CornerRadius="8" Padding="10,10,10,8" Margin="0,0,0,16">
+            <StackPanel>
+                <Grid MinHeight="24">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="PreviewChevron" Text="&#xE70D;" FontFamily="{StaticResource IconFont}" FontSize="9"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="PreviewName" Grid.Column="1" FontSize="12.5" FontWeight="SemiBold" Margin="2,0,8,0"
+                               VerticalAlignment="Center" TextTrimming="CharacterEllipsis" MaxWidth="260"/>
+                    <Border x:Name="PreviewLine" Grid.Column="2" Height="1" Opacity="0.45" VerticalAlignment="Center"/>
+                </Grid>
+                <!-- Пример закладки в группе -->
+                <Grid Margin="8,6,0,0" MinHeight="34">
+                    <Border CornerRadius="5" Background="{DynamicResource M.RowBg}"/>
+                    <Border x:Name="PreviewStripe" Width="3" HorizontalAlignment="Left" Margin="0,8" CornerRadius="0,2,2,0"/>
+                    <StackPanel Orientation="Horizontal" Margin="11,0,0,0" VerticalAlignment="Center">
+                        <TextBlock Text="&#xE8B7;" FontFamily="{StaticResource IconFont}" FontSize="16" Foreground="#FFC83D"
+                                   VerticalAlignment="Center" Margin="2,0,14,0"/>
+                        <TextBlock Text="AppData" FontSize="13.5" Foreground="{DynamicResource M.Fg}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <Border Background="{DynamicResource CardBg}" BorderBrush="{DynamicResource MenuBorder}"
+                BorderThickness="1" CornerRadius="8" Padding="16,14,16,16">
+            <StackPanel>
+                <TextBlock Text="{DynamicResource L.GroupName}" Foreground="{DynamicResource SubFg}" Margin="0,0,0,5"/>
+                <TextBox x:Name="NameBox" Style="{StaticResource Input}" TextChanged="Any_Changed"/>
+
+                <TextBlock Text="{DynamicResource L.GroupTitleColor}" Foreground="{DynamicResource SubFg}" Margin="0,16,0,7"/>
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton x:Name="TitleSystem" Style="{StaticResource Segment}" GroupName="TitleColor"
+                                 Content="{DynamicResource L.ColorSystem}" Checked="Any_Checked"/>
+                    <RadioButton x:Name="TitleCustom" Style="{StaticResource Segment}" GroupName="TitleColor"
+                                 Content="{DynamicResource L.ColorCustom}" Checked="Any_Checked"/>
+                    <local:ColorPicker x:Name="TitlePicker" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <TextBlock Text="{DynamicResource L.GroupItemColor}" Foreground="{DynamicResource SubFg}" Margin="0,16,0,7"/>
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton x:Name="ItemSystem" Style="{StaticResource Segment}" GroupName="ItemColor"
+                                 Content="{DynamicResource L.ColorSystem}" Checked="Any_Checked"/>
+                    <RadioButton x:Name="ItemCustom" Style="{StaticResource Segment}" GroupName="ItemColor"
+                                 Content="{DynamicResource L.ColorCustom}" Checked="Any_Checked"/>
+                    <local:ColorPicker x:Name="ItemPicker" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- Низ -->
+        <Grid Margin="0,16,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*" MinWidth="12"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="DeleteBtn" Style="{StaticResource PlainButton}" Foreground="{DynamicResource Danger}"
+                    Click="Delete_Click">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="&#xE74D;" FontFamily="{StaticResource IconFont}" FontSize="12"
+                               VerticalAlignment="Center" Margin="0,0,7,0"/>
+                    <TextBlock x:Name="DeleteText" Text="{DynamicResource L.DeleteGroup}"/>
+                </StackPanel>
+            </Button>
+            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                <Button Style="{StaticResource PlainButton}" Content="{DynamicResource L.Cancel}" MinWidth="90"
+                        Margin="0,0,8,0" IsCancel="True" Click="Cancel_Click"/>
+                <Button Style="{StaticResource AccentButton}" Content="{DynamicResource L.Save}" MinWidth="104"
+                        IsDefault="True" Click="Save_Click"/>
+            </StackPanel>
+        </Grid>
+    </StackPanel>
+</Window>

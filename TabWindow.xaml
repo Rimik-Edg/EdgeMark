@@ -1,0 +1,39 @@
+<Window x:Class="EdgeMark.TabWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="EdgeMark"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True" ShowActivated="False"
+        Focusable="False" AllowDrop="True"
+        Width="34" Height="94" Left="-3000" Top="-3000">
+    <!-- Окно почти целиком прозрачное (и «прозрачное для кликов»).
+         Кликабельны только два язычка у самого края экрана. -->
+    <Grid x:Name="Root">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="61"/>
+            <RowDefinition Height="33"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Язычок папок. Hit — область наведения (без зазора до второго язычка),
+             PillBox — то, что видно. Пока какой-то язычок активен, обе области широкие. -->
+        <Grid x:Name="Hit" Grid.Row="0" Width="7" HorizontalAlignment="Right" Background="#01000000">
+            <Grid x:Name="PillBox" Width="7" HorizontalAlignment="Right" Margin="0,0,0,3">
+                <Border x:Name="Pill" CornerRadius="8,0,0,8" Background="{DynamicResource TabColor}" Opacity="0.6"/>
+                <TextBlock x:Name="Glyph" Text="&#xE8B7;" FontFamily="{StaticResource IconFont}" FontSize="14"
+                           Foreground="{DynamicResource TabFg}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                           Opacity="0" IsHitTestVisible="False"/>
+            </Grid>
+        </Grid>
+
+        <!-- Язычок заметок: вдвое ниже, значок — закладка-флажок -->
+        <Grid x:Name="NoteHit" Grid.Row="1" Width="7" HorizontalAlignment="Right" Background="#01000000">
+            <Grid x:Name="NotePillBox" Width="7" HorizontalAlignment="Right" Margin="0,3,0,0">
+                <Border x:Name="NotePill" CornerRadius="6,0,0,6" Background="{DynamicResource TabColor}" Opacity="0.6"/>
+                <Path x:Name="NoteGlyph" Data="M0,0 L9,0 L9,12 L4.5,8.6 L0,12 Z" Fill="{DynamicResource TabFg}"
+                      HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="None"
+                      Opacity="0" IsHitTestVisible="False"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
